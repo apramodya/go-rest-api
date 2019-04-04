@@ -55,7 +55,14 @@ func GetPerson(writer http.ResponseWriter, request *http.Request) {
 }
 
 func DeletePerson(writer http.ResponseWriter, request *http.Request) {
-
+	params := mux.Vars(request)
+	for index, item:= range people {
+		if item.ID == params["id"] {
+			people = append(people[:index], people[index+1:]...)
+			break
+		}
+	}
+	json.NewEncoder(writer).Encode(people)
 }
 
 func GetPeople(writer http.ResponseWriter, request *http.Request) {
