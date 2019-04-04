@@ -36,7 +36,12 @@ func main() {
 }
 
 func CreatePerson(writer http.ResponseWriter, request *http.Request) {
-
+	params := mux.Vars(request)
+	var person Person
+	_ = json.NewDecoder(request.Body).Decode(&person)
+	person.ID = params["id"]
+	people = append(people, person)
+	json.NewEncoder(writer).Encode(people)
 }
 
 func GetPerson(writer http.ResponseWriter, request *http.Request) {
